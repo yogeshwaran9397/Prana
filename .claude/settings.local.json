@@ -3,7 +3,10 @@
     "allow": [
       "WebFetch(domain:youtu.be)",
       "WebSearch",
-      "WebFetch(domain:www.youtube.com)"
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(pnpm --version)",
+      "Bash(pnpm install *)",
+      "Bash(pnpm --filter @prana/core test)"
     ]
   }
 }

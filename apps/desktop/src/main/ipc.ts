@@ -1,0 +1,22 @@
+/** Shared IPC channel names — imported by both main (handlers) and preload (invokers). */
+export const IPC = {
+  getProfile: "profile:get",
+  acceptDisclaimer: "profile:acceptDisclaimer",
+  listRoutines: "routines:list",
+  saveRoutine: "routines:save",
+  deleteRoutine: "routines:delete",
+  saveSession: "sessions:save",
+  listSessions: "sessions:list",
+  getPresenceChecks: "sessions:presence",
+  getGoals: "goals:get",
+  setGoal: "goals:set",
+  getEarnedBadges: "badges:get",
+  awardBadges: "badges:award",
+  getSettings: "settings:get",
+  setSettings: "settings:set",
+  exportAll: "data:export",
+  importAll: "data:import",
+  exportToFile: "data:exportToFile",
+  importFromFile: "data:importFromFile",
+  notify: "os:notify",
+} as const;

@@ -1,0 +1,41 @@
+{
+  "name": "@prana/desktop",
+  "version": "1.0.0",
+  "description": "PranaCoach desktop (Electron) — POC 1 / R1.",
+  "main": "./out/main/index.js",
+  "author": "PranaCoach",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck:node": "tsc -p tsconfig.node.json --noEmit",
+    "typecheck:web": "tsc -p tsconfig.web.json --noEmit",
+    "typecheck": "pnpm typecheck:node && pnpm typecheck:web",
+    "package": "electron-vite build && electron-builder --win",
+    "rebuild": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@prana/core": "workspace:*",
+    "better-sqlite3": "^11.3.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/node": "^20.14.15",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "electron": "^31.4.0",
+    "electron-builder": "^24.13.3",
+    "electron-vite": "^2.3.0",
+    "postcss": "^8.4.45",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.1",
+    "recharts": "^2.12.7",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.3",
+    "zustand": "^4.5.5"
+  }
+}
