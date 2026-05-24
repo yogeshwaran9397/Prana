@@ -69,13 +69,14 @@
 
 Established a **3-stage release model** and aligned all four docs to it:
 
-| Release | Platforms | Auth | Data | Headline |
-|---|---|---|---|---|
-| **R1 — Proto / MVP** | Desktop (Win first) | None | Local only | Core: customizable timer + guided session + logging/badges; camera/voice opt-in |
-| **R2 — Multi-platform** | Desktop + Android + iOS | None | Local per device | Same experience on mobile, no sync |
-| **R3 — Cloud** | All | authN + authZ | Cloud + sync | Accounts, cloud-stored profile & activity, cross-device sync, analytics — **50k+ users** |
+| Release                 | Platforms               | Auth          | Data             | Headline                                                                                 |
+| ----------------------- | ----------------------- | ------------- | ---------------- | ---------------------------------------------------------------------------------------- |
+| **R1 — Proto / MVP**    | Desktop (Win first)     | None          | Local only       | Core: customizable timer + guided session + logging/badges; camera/voice opt-in          |
+| **R2 — Multi-platform** | Desktop + Android + iOS | None          | Local per device | Same experience on mobile, no sync                                                       |
+| **R3 — Cloud**          | All                     | authN + authZ | Cloud + sync     | Accounts, cloud-stored profile & activity, cross-device sync, analytics — **50k+ users** |
 
 Key decisions and changes:
+
 - **Cross-platform stack:** shared **TypeScript core** (domain, TimerEngine, repositories) +
   shared **React UI**, packaged via **Electron** (desktop) and **Capacitor** (Android/iOS) —
   maximizes reuse and keeps offline ML (Vosk/MediaPipe) workable. Noted alternatives:
@@ -84,7 +85,7 @@ Key decisions and changes:
   (mobile, accounts, sync, authZ, scale), an R3 functional block (auth, cloud storage, sync,
   activity analytics, account/data deletion), and a scale/capacity section
   (~50k registered, ~15% DAU, low-hundreds peak concurrency).
-- **`docs/SRS.md`** — *new* formal IEEE-830-style spec: testable requirements with IDs
+- **`docs/SRS.md`** — _new_ formal IEEE-830-style spec: testable requirements with IDs
   (`FR-*`, `NFR-*`, `DR-*`, `IR-*`), each tagged **[R1]/[R2]/[R3]**; covers timer engine,
   presence, voice, logging/badges, mobile parity, auth/authZ (FR-36–42), cloud sync
   (FR-43–47), scalability NFRs to 50k+ (NFR-13–16), cloud/scale requirements (CR-1–6), and
@@ -110,20 +111,21 @@ Flutter vs React Native) and offered to proceed to Phase 0.
 ### Claude — Response (summary)
 
 Suggested names tied to the core value (adaptive, beginner-friendly breath timing + presence
-+ voice + streaks):
 
-- **Top recommendation:** **Prana** (life force / breath; short, brandable) — with a caveat
+- voice + streaks):
+
+* **Top recommendation:** **Prana** (life force / breath; short, brandable) — with a caveat
   to verify domain/trademark since it's a common Sanskrit word.
-- **By theme:**
-  - Breath-pacing / adaptive: *Pace & Breath, Sukha, EasyPrana, Tempo Breath*
-  - Calm / habit / streaks: *Anuloma, Sthira, BreathStreak*
-  - Coach / guidance: *PranaCoach, Breathwise*
-- **Shortlist:** Prana · Sukha · Anuloma · Breathwise · Tempo Breath (with fit + watch-outs).
-- Practical advice before committing (important for the public R3 launch): check domain
+* **By theme:**
+  - Breath-pacing / adaptive: _Pace & Breath, Sukha, EasyPrana, Tempo Breath_
+  - Calm / habit / streaks: _Anuloma, Sthira, BreathStreak_
+  - Coach / guidance: _PranaCoach, Breathwise_
+* **Shortlist:** Prana · Sukha · Anuloma · Breathwise · Tempo Breath (with fit + watch-outs).
+* Practical advice before committing (important for the public R3 launch): check domain
   (`.app`/`.com`), app-store name collisions (many breathing apps exist), and trademark.
   Coined/compound names (Breathwise, Anuloma, Tempo Breath) are usually easier to protect than
   common Sanskrit words.
-- Offered to (1) pick one and update all four docs, or (2) brainstorm in a chosen direction,
+* Offered to (1) pick one and update all four docs, or (2) brainstorm in a chosen direction,
   and to run an availability check on the chosen favorite.
 
 ---
@@ -139,6 +141,7 @@ Wrote this file (`docs/CONVERSATION_LOG.md`) capturing the full planning convers
 ---
 
 ## Artifacts produced in this conversation
+
 - `docs/PRD.md` — Product Requirements Document (v0.2, 3-release model)
 - `docs/SRS.md` — Software Requirements Specification (IEEE-830 style)
 - `docs/ARCHITECTURE.md` — Software Engineering Architecture / design (v0.2)
@@ -146,7 +149,8 @@ Wrote this file (`docs/CONVERSATION_LOG.md`) capturing the full planning convers
 - `docs/CONVERSATION_LOG.md` — this transcript
 
 ## Open items / next steps
-- Confirm the **app name** (placeholder: *PranaCoach*).
+
+- Confirm the **app name** (placeholder: _PranaCoach_).
 - Confirm the **cross-platform stack** (recommended: shared TS core + Electron + Capacitor).
 - Decide whether to begin **Phase 0** scaffolding (monorepo: `packages/core` + `apps/desktop`
-  + SQLite + 5 screens).
+  - SQLite + 5 screens).

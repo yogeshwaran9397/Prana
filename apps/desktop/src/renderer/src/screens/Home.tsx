@@ -62,7 +62,11 @@ export function Home(): JSX.Element {
         <h2 className="mb-2 text-lg font-semibold">Quick start (presets)</h2>
         <div className="grid grid-cols-3 gap-4">
           {BUILTIN_PRESETS.map((p) => (
-            <button key={p.level} className="card text-left hover:border-sky-400" onClick={() => void startPreset(p.level)}>
+            <button
+              key={p.level}
+              className="card text-left hover:border-sky-400"
+              onClick={() => void startPreset(p.level)}
+            >
               <div className="text-lg font-semibold capitalize">{p.label}</div>
               <div className="text-sm text-slate-400">Adaptive, cap {settings.caps.maxHoldSeconds}s</div>
             </button>

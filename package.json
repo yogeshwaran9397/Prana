@@ -4,18 +4,29 @@
   "version": "1.0.0",
   "description": "PranaCoach — adaptive pranayama breath-timer (POC 1 / R1 desktop MVP)",
   "scripts": {
-    "build:core": "pnpm --filter @prana/core build",
-    "test": "pnpm --filter @prana/core test",
-    "test:core": "pnpm --filter @prana/core test",
     "dev": "pnpm --filter @prana/desktop dev",
+    "build:core": "pnpm --filter @prana/core build",
     "build:desktop": "pnpm --filter @prana/desktop build",
-    "lint": "pnpm -r lint"
+    "build": "pnpm build:core && pnpm build:desktop",
+    "test": "pnpm --filter @prana/core test",
+    "typecheck": "pnpm --filter @prana/core typecheck && pnpm --filter @prana/desktop typecheck",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,yml,yaml}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,json,md,yml,yaml}\"",
+    "lint": "pnpm format:check && pnpm typecheck",
+    "verify": "pnpm lint && pnpm test"
   },
   "packageManager": "pnpm@10.33.2",
   "engines": {
     "node": ">=20"
   },
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  },
   "pnpm": {
-    "onlyBuiltDependencies": ["better-sqlite3", "electron", "esbuild"]
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "electron",
+      "esbuild"
+    ]
   }
 }

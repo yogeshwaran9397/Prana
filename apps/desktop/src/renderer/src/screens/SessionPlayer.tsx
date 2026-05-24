@@ -199,7 +199,8 @@ export function SessionPlayer(): JSX.Element {
       presenceChecks.current,
     );
     setNewBadges(earned);
-    if (s.completed) void window.prana.notify("Session complete 🎉", `${routine!.name} · ${s.durationS}s practiced`);
+    if (s.completed)
+      void window.prana.notify("Session complete 🎉", `${routine!.name} · ${s.durationS}s practiced`);
   }
 
   // ---- pre-session ----
@@ -210,7 +211,8 @@ export function SessionPlayer(): JSX.Element {
         <h1 className="text-2xl font-bold">{routine.name}</h1>
         <div className="card space-y-2">
           <div className="text-slate-300">
-            {routine.techniques.length} techniques · est. {Math.floor(total / 60)}:{String(Math.round(total % 60)).padStart(2, "0")}
+            {routine.techniques.length} techniques · est. {Math.floor(total / 60)}:
+            {String(Math.round(total % 60)).padStart(2, "0")}
           </div>
           <ul className="text-sm text-slate-400">
             {routine.techniques.map((t) => (
@@ -229,7 +231,8 @@ export function SessionPlayer(): JSX.Element {
           </label>
           <label className="flex items-center gap-2">
             <input type="checkbox" checked={useMic} onChange={(e) => setUseMic(e.target.checked)} />
-            Enable microphone for voice "pause"/"resume" <span className="text-slate-500">(no audio stored)</span>
+            Enable microphone for voice "pause"/"resume"{" "}
+            <span className="text-slate-500">(no audio stored)</span>
           </label>
           <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-2 text-xs text-amber-200">
             Stop if you feel dizzy and breathe normally. This is not medical advice.
@@ -300,7 +303,11 @@ export function SessionPlayer(): JSX.Element {
       </div>
 
       {live && (
-        <BreathAnimation kind={live.phase.kind} progress={live.progress} remainingSeconds={live.remainingMs / 1000} />
+        <BreathAnimation
+          kind={live.phase.kind}
+          progress={live.progress}
+          remainingSeconds={live.remainingMs / 1000}
+        />
       )}
       <div className="h-6 text-lg text-slate-300" aria-live="polite">
         {caption}

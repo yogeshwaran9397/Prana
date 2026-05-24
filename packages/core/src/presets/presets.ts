@@ -85,18 +85,16 @@ function retention(level: Level): Technique {
 
 export function presetRoutine(level: Level): Routine {
   const name =
-    level === "beginner" ? "Beginner Daily" : level === "intermediate" ? "Intermediate Daily" : "Advanced Daily";
+    level === "beginner"
+      ? "Beginner Daily"
+      : level === "intermediate"
+        ? "Intermediate Daily"
+        : "Advanced Daily";
   return {
     id: id("routine"),
     name,
     warmupSeconds: level === "beginner" ? 30 : 20,
-    techniques: [
-      bhastrika(level),
-      kapalbhati(level),
-      anulomVilom(level),
-      retention(level),
-      bhramari(level),
-    ],
+    techniques: [bhastrika(level), kapalbhati(level), anulomVilom(level), retention(level), bhramari(level)],
     closingRestSeconds: level === "beginner" ? 60 : 45,
     paceMultiplier: 1,
   };

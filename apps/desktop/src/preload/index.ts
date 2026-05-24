@@ -31,7 +31,8 @@ const api = {
   getGoals: (): Promise<Goal[]> => ipcRenderer.invoke(IPC.getGoals),
   setGoal: (goal: Goal): Promise<void> => ipcRenderer.invoke(IPC.setGoal, goal),
 
-  getEarnedBadges: (): Promise<{ code: string; earnedAt: number }[]> => ipcRenderer.invoke(IPC.getEarnedBadges),
+  getEarnedBadges: (): Promise<{ code: string; earnedAt: number }[]> =>
+    ipcRenderer.invoke(IPC.getEarnedBadges),
   awardBadges: (codes: string[]): Promise<void> => ipcRenderer.invoke(IPC.awardBadges, codes),
 
   getSettings: (): Promise<AppSettings> => ipcRenderer.invoke(IPC.getSettings),

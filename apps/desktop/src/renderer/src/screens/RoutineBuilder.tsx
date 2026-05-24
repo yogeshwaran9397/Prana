@@ -91,7 +91,11 @@ export function RoutineBuilder(): JSX.Element {
       <div className="card space-y-3">
         <label className="block">
           <span className="text-sm text-slate-400">Name</span>
-          <input className="input mt-1 w-full" value={routine.name} onChange={(e) => update({ name: e.target.value })} />
+          <input
+            className="input mt-1 w-full"
+            value={routine.name}
+            onChange={(e) => update({ name: e.target.value })}
+          />
         </label>
         <div className="grid grid-cols-3 gap-3">
           <label className="block">
@@ -189,9 +193,7 @@ export function RoutineBuilder(): JSX.Element {
                 <span className="text-sm text-slate-500">seconds</span>
                 <button
                   className="ml-auto text-slate-500 hover:text-rose-400"
-                  onClick={() =>
-                    updateTechnique(tIdx, { phases: tech.phases.filter((_, j) => j !== pIdx) })
-                  }
+                  onClick={() => updateTechnique(tIdx, { phases: tech.phases.filter((_, j) => j !== pIdx) })}
                 >
                   ✕
                 </button>

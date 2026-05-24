@@ -36,7 +36,10 @@ export class PresenceMonitor {
   }
 
   async start(): Promise<void> {
-    this.stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 }, audio: false });
+    this.stream = await navigator.mediaDevices.getUserMedia({
+      video: { width: 320, height: 240 },
+      audio: false,
+    });
     this.video = document.createElement("video");
     this.video.srcObject = this.stream;
     this.video.muted = true;
@@ -107,7 +110,10 @@ export class PresenceMonitor {
     let motion = 0;
     if (this.lastFrame) {
       for (let i = 0; i < n; i++) {
-        const prev = 0.299 * this.lastFrame.data[i * 4]! + 0.587 * this.lastFrame.data[i * 4 + 1]! + 0.114 * this.lastFrame.data[i * 4 + 2]!;
+        const prev =
+          0.299 * this.lastFrame.data[i * 4]! +
+          0.587 * this.lastFrame.data[i * 4 + 1]! +
+          0.114 * this.lastFrame.data[i * 4 + 2]!;
         motion += Math.abs(lumas[i]! - prev);
       }
       motion /= n;

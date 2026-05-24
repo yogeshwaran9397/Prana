@@ -26,17 +26,17 @@ badges grow — all **100% offline, with no account**.
 
 - [ ] Beginner configures and completes an adaptive guided session offline (button-driven).
 - [ ] Per-phase / per-round durations, rounds, presets, ratio mode, pace multiplier all work; the
-  max-hold safety cap is enforced with a warning + explicit override (FR-1…FR-12).
+      max-hold safety cap is enforced with a warning + explicit override (FR-1…FR-12).
 - [ ] Visual breath animation + audio cues stay synced to phases; pre-session consent + disclaimer
-  shown (FR-13…FR-15).
+      shown (FR-13…FR-15).
 - [ ] Pause/resume works by **button** and, when enabled, by **voice** (FR-22…FR-25).
 - [ ] With camera enabled, presence % is logged from randomized checks; **no frames persisted**;
-  with camera disabled, everything still works (FR-16…FR-21).
+      with camera disabled, everything still works (FR-16…FR-21).
 - [ ] Each completed session persists; streaks, weekly/monthly goals, and badges compute correctly
-  against test fixtures; native notifications fire (FR-26…FR-31).
+      against test fixtures; native notifications fire (FR-26…FR-31).
 - [ ] Data exports/imports as JSON (FR-32).
 - [ ] Timer accuracy within **±100ms** over a 15-min session (NFR-1); ML runs off the UI thread,
-  UI ≥30fps (NFR-2); camera/mic opt-in, no raw media stored (NFR-9).
+      UI ≥30fps (NFR-2); camera/mic opt-in, no raw media stored (NFR-9).
 - [ ] Core domain + timer + goal/badge logic covered by unit tests (NFR-22).
 - [ ] A signed/packaged Windows installer is produced.
 
@@ -44,39 +44,39 @@ badges grow — all **100% offline, with no account**.
 
 ## 2. Scope boundaries
 
-| In scope (R1)                                                      | Out of scope (deferred)                                      |
-| ------------------------------------------------------------------ | ------------------------------------------------------------ |
-| Windows desktop (Electron); macOS/Linux best-effort, untested      | Android/iOS (R2)                                             |
-| Local SQLite, single local profile (`user_id` present but fixed) | Accounts, login, authZ (R3)                                  |
-| Offline timer engine, cues, presence, voice                        | Cloud sync, API, analytics (R3)                              |
-| JSON export/import as the only "backup"                            | Cross-device sync (R3)                                       |
+| In scope (R1)                                                    | Out of scope (deferred)                                  |
+| ---------------------------------------------------------------- | -------------------------------------------------------- |
+| Windows desktop (Electron); macOS/Linux best-effort, untested    | Android/iOS (R2)                                         |
+| Local SQLite, single local profile (`user_id` present but fixed) | Accounts, login, authZ (R3)                              |
+| Offline timer engine, cues, presence, voice                      | Cloud sync, API, analytics (R3)                          |
+| JSON export/import as the only "backup"                          | Cross-device sync (R3)                                   |
 | `StorageRepository` interface (SQLite impl only)                 | `ApiStorageRepository` / `SyncingStorageRepository` (R3) |
 
 **Reuse rule (non-negotiable):** domain types, `TimerEngine`, goals/badges logic, and the
-`StorageRepository` *interface* live in `packages/core` with **zero Electron/DOM imports**, so R2
+`StorageRepository` _interface_ live in `packages/core` with **zero Electron/DOM imports**, so R2
 and R3 reuse them untouched (NFR-20, NFR-21, C2, C3, C6).
 
 ---
 
 ## 3. Technology stack (pinned intent)
 
-| Concern       | Choice                                      | Notes                                                  |
-| ------------- | ------------------------------------------- | ------------------------------------------------------ |
+| Concern       | Choice                                      | Notes                                              |
+| ------------- | ------------------------------------------- | -------------------------------------------------- |
 | Language      | TypeScript (strict)                         | `strict: true`, `noUncheckedIndexedAccess` in core |
 | Monorepo      | pnpm workspaces + Turborepo                 | `packages/core` + `apps/desktop`                   |
-| Desktop shell | Electron +`electron-vite`                 | main / preload / renderer split                        |
-| UI            | React 18 + Vite + Tailwind                  | one component set, reused in R2                        |
-| State         | Zustand                                     | session/timer/UI stores                                |
-| Router        | React Router (hash history)                 | works under `file://` in Electron                    |
-| Local DB      | `better-sqlite3` (main process)           | migrations on first run                                |
-| Presence ML   | MediaPipe Face Detection / TF.js BlazeFace  | renderer Web Worker                                    |
-| Voice ML      | Vosk WASM (small en model)                  | Web Worker, restricted grammar                         |
-| Audio cues    | Pre-recorded clips + WebAudio               | volume + on/off                                        |
-| Charts        | Recharts                                    | dashboard trends                                       |
-| Notifications | Electron `Notification`                   | + in-app toast mirror                                  |
-| Testing       | Vitest (unit) + Playwright/Electron (smoke) | fixtures for engine & badges                           |
-| Packaging     | electron-builder (NSIS, Windows)            | code signing if cert available                         |
-| Lint/format   | ESLint + Prettier                           | enforced in CI                                         |
+| Desktop shell | Electron +`electron-vite`                   | main / preload / renderer split                    |
+| UI            | React 18 + Vite + Tailwind                  | one component set, reused in R2                    |
+| State         | Zustand                                     | session/timer/UI stores                            |
+| Router        | React Router (hash history)                 | works under `file://` in Electron                  |
+| Local DB      | `better-sqlite3` (main process)             | migrations on first run                            |
+| Presence ML   | MediaPipe Face Detection / TF.js BlazeFace  | renderer Web Worker                                |
+| Voice ML      | Vosk WASM (small en model)                  | Web Worker, restricted grammar                     |
+| Audio cues    | Pre-recorded clips + WebAudio               | volume + on/off                                    |
+| Charts        | Recharts                                    | dashboard trends                                   |
+| Notifications | Electron `Notification`                     | + in-app toast mirror                              |
+| Testing       | Vitest (unit) + Playwright/Electron (smoke) | fixtures for engine & badges                       |
+| Packaging     | electron-builder (NSIS, Windows)            | code signing if cert available                     |
+| Lint/format   | ESLint + Prettier                           | enforced in CI                                     |
 
 > Open decisions carried from [`ARCHITECTURE.md`](../ARCHITECTURE.md) §9 — resolve in Phase 0:
 > Electron vs Tauri (**recommend Electron**, for ML ecosystem); Vosk WASM vs Python sidecar
@@ -135,47 +135,61 @@ prana/                              (this repo)
 ### 5.1 Domain model (`packages/core/src/domain`)
 
 ```ts
-type PhaseKind = 'inhale' | 'hold_in' | 'exhale' | 'hold_out' | 'rest';
+type PhaseKind = "inhale" | "hold_in" | "exhale" | "hold_out" | "rest";
 
-interface Phase { kind: PhaseKind; seconds: number; }          // seconds may be 0 (skipped)
+interface Phase {
+  kind: PhaseKind;
+  seconds: number;
+} // seconds may be 0 (skipped)
 
 interface Technique {
   id: string;
-  name: string;                                                // "Anulom Vilom", "Bhramari", …
+  name: string; // "Anulom Vilom", "Bhramari", …
   rounds: number;
-  phases: Phase[];                                             // one round's phase sequence
-  ratio?: { unit: number; pattern: number[] };                // optional ratio mode, e.g. 1:4:2
+  phases: Phase[]; // one round's phase sequence
+  ratio?: { unit: number; pattern: number[] }; // optional ratio mode, e.g. 1:4:2
 }
 
 interface Routine {
-  id: string; name: string;
+  id: string;
+  name: string;
   warmupSeconds: number;
   techniques: Technique[];
   closingRestSeconds: number;
-  paceMultiplier: number;                                      // 0.75–1.25
+  paceMultiplier: number; // 0.75–1.25
 }
 
-interface SafetyCaps { maxHoldSeconds: number; }              // default 8 (beginner)
+interface SafetyCaps {
+  maxHoldSeconds: number;
+} // default 8 (beginner)
 
 interface Progression {
-  enabled: boolean; deltaSeconds: number; everyNSessions: number; targetHoldSeconds: number;
+  enabled: boolean;
+  deltaSeconds: number;
+  everyNSessions: number;
+  targetHoldSeconds: number;
 }
 ```
 
 ### 5.2 Compiled timeline + engine events
 
 ```ts
-interface PhaseInstance { kind: PhaseKind; seconds: number; techniqueId: string; round: number; }
+interface PhaseInstance {
+  kind: PhaseKind;
+  seconds: number;
+  techniqueId: string;
+  round: number;
+}
 
-type Timeline = PhaseInstance[];                               // flat, after caps/pace/progression
+type Timeline = PhaseInstance[]; // flat, after caps/pace/progression
 
 type EngineEvent =
-  | { type: 'phaseStart'; index: number; phase: PhaseInstance }
-  | { type: 'tick'; index: number; remainingMs: number }
-  | { type: 'phaseEnd'; index: number }
-  | { type: 'roundEnd'; techniqueId: string; round: number }
-  | { type: 'techniqueEnd'; techniqueId: string }
-  | { type: 'sessionEnd'; summary: SessionSummary };
+  | { type: "phaseStart"; index: number; phase: PhaseInstance }
+  | { type: "tick"; index: number; remainingMs: number }
+  | { type: "phaseEnd"; index: number }
+  | { type: "roundEnd"; techniqueId: string; round: number }
+  | { type: "techniqueEnd"; techniqueId: string }
+  | { type: "sessionEnd"; summary: SessionSummary };
 ```
 
 **Engine rules:** drive from `performance.now()` (not `setInterval` accumulation) → ±100ms over
@@ -227,7 +241,7 @@ Each task lists the requirement IDs it satisfies. Phase exit criteria are the ga
 
 **Exit:** app launches on Windows, navigates between empty screens, DB file created on first run.
 
-### Phase 1 — Timer Engine + Guided Session *(the differentiator)*
+### Phase 1 — Timer Engine + Guided Session _(the differentiator)_
 
 6. Implement `domain/` types (§5.1) (FR-1…FR-4, FR-7).
 7. **TDD the engine:** write Vitest fixtures first for caps (FR-5), ratio mode (FR-7), pace
@@ -264,7 +278,7 @@ button pause/resume works; timer accurate to ±100ms (NFR-1).
 **Exit:** completing sessions updates streaks/goals, awards badges, fires notifications, shows on
 the dashboard; all logic covered by tests (NFR-22).
 
-### Phase 3 — Presence Monitoring *(opt-in camera)*
+### Phase 3 — Presence Monitoring _(opt-in camera)_
 
 19. Camera consent + Settings toggle + privacy copy ("no images stored") (NFR-9, NFR-10).
 20. `presence.worker.ts`: hidden `<video>`, BlazeFace/MediaPipe detection, **randomized** check
@@ -276,7 +290,7 @@ the dashboard; all logic covered by tests (NFR-22).
 **Exit:** with camera on, sessions log presence %; with camera off everything works; no raw frames
 persisted (FR-21, NFR-9).
 
-### Phase 4 — Voice Control *(opt-in mic)*
+### Phase 4 — Voice Control _(opt-in mic)_
 
 23. Mic consent + Settings toggle + listening indicator (FR-24, NFR-10).
 24. `voice.worker.ts`: Vosk WASM in a Web Worker with restricted grammar
@@ -305,8 +319,8 @@ all §1 DoD boxes checked.
 
 ## 7. Suggested milestones
 
-| Milestone                        | Phases | Demoable outcome                                                               |
-| -------------------------------- | ------ | ------------------------------------------------------------------------------ |
+| Milestone                 | Phases | Demoable outcome                                                               |
+| ------------------------- | ------ | ------------------------------------------------------------------------------ |
 | **M1 — Walking skeleton** | 0      | App opens on Windows, navigates 5 empty screens, DB created                    |
 | **M2 — Core loop**        | 1      | Build + run a custom adaptive session with cues; the product's reason to exist |
 | **M3 — Retention loop**   | 2      | Sessions persist; streaks/goals/badges/notifications/dashboard work            |
@@ -339,13 +353,13 @@ Every test references the requirement ID it verifies (SRS §8.2 traceability).
 
 | Area                                      | SRS IDs                                         | Phase   |
 | ----------------------------------------- | ----------------------------------------------- | ------- |
-| Timer engine & customization              | FR-1…FR-12                                     | 1       |
-| Guidance & cues                           | FR-13…FR-15                                    | 1       |
-| Presence (opt-in)                         | FR-16…FR-21                                    | 3       |
-| Voice (opt-in)                            | FR-22…FR-25                                    | 4       |
-| Activity / goals / badges / notifications | FR-26…FR-32                                    | 2       |
-| Data model                                | DR-1…DR-4, DR-8                                | 0–2    |
-| Interfaces                                | IR-U1, IR-U2, IR-U5, IR-H1, IR-H2, IR-S1, IR-S2 | 0–5    |
+| Timer engine & customization              | FR-1…FR-12                                      | 1       |
+| Guidance & cues                           | FR-13…FR-15                                     | 1       |
+| Presence (opt-in)                         | FR-16…FR-21                                     | 3       |
+| Voice (opt-in)                            | FR-22…FR-25                                     | 4       |
+| Activity / goals / badges / notifications | FR-26…FR-32                                     | 2       |
+| Data model                                | DR-1…DR-4, DR-8                                 | 0–2     |
+| Interfaces                                | IR-U1, IR-U2, IR-U5, IR-H1, IR-H2, IR-S1, IR-S2 | 0–5     |
 | Performance                               | NFR-1, NFR-2                                    | 1, 3, 4 |
 | Privacy                                   | NFR-9, NFR-10, NFR-12                           | 3, 4    |
 | Maintainability / reuse                   | NFR-20, NFR-21, NFR-22                          | all     |
@@ -360,12 +374,12 @@ Every test references the requirement ID it verifies (SRS §8.2 traceability).
 
 | Risk                                             | Mitigation                                                                                 |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| Timer drift breaks ±100ms goal                  | Monotonic `performance.now()`, not interval accumulation; drift test in QA               |
-| Offline voice accuracy                           | Vosk**restricted grammar**; debounce; keyboard/button fallback always present        |
+| Timer drift breaks ±100ms goal                   | Monotonic `performance.now()`, not interval accumulation; drift test in QA                 |
+| Offline voice accuracy                           | Vosk**restricted grammar**; debounce; keyboard/button fallback always present              |
 | Presence false negatives (lighting, closed eyes) | Detect presence not gaze; tunable threshold; presence is informational, never blocks       |
 | Unsafe breath holds                              | Hard max-hold cap + warning + explicit override + medical disclaimer + "stop if dizzy" cue |
 | Camera/mic privacy concerns                      | Opt-in per session; local-only; no media stored; transparent indicators                    |
-| Core accidentally couples to Electron/DOM        | Lint rule / review gate:`packages/core` has no platform imports; keeps R2/R3 cheap       |
+| Core accidentally couples to Electron/DOM        | Lint rule / review gate:`packages/core` has no platform imports; keeps R2/R3 cheap         |
 | ML stutters UI                                   | Presence/voice in Web Workers off the main thread (NFR-2)                                  |
 
 ---
@@ -373,10 +387,10 @@ Every test references the requirement ID it verifies (SRS §8.2 traceability).
 ## 11. Pre-build checklist (resolve before Phase 0)
 
 - [ ] Confirm final app name (placeholder **PranaCoach** / repo **Prana**) — affects installer,
-  window title, branding.
+      window title, branding.
 - [ ] Confirm stack: Electron + Capacitor path (vs Flutter/RN) — only Electron matters for R1.
 - [ ] Acquire/record audio cue clips (inhale/hold/exhale + tones), or generate tones in WebAudio
-  for M2 and swap real clips later.
+      for M2 and swap real clips later.
 - [ ] Choose Vosk small-en model + MediaPipe/BlazeFace model files; confirm licenses for bundling.
 - [ ] Windows code-signing certificate available? (else ship unsigned for internal POC).
 

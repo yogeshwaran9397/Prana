@@ -18,6 +18,7 @@ apps/desktop       Electron app: main (SQLite repo + IPC + notifications), prelo
 ```
 
 ## Prerequisites
+
 - Node ≥ 20, pnpm ≥ 10.
 - On first setup the native deps (Electron binary, `better-sqlite3`) must be built:
   ```sh
@@ -27,6 +28,7 @@ apps/desktop       Electron app: main (SQLite repo + IPC + notifications), prelo
   ```
 
 ## Develop & run
+
 ```sh
 pnpm test            # run the @prana/core unit suite (40 tests)
 pnpm dev             # launch the desktop app with hot reload (electron-vite)
@@ -38,6 +40,7 @@ pnpm --filter @prana/desktop package   # Windows NSIS installer (release/)
 > that variable makes Electron behave as plain Node and `require('electron')` returns a path string.
 
 ## What works (R1 acceptance — see SRS §7)
+
 - **Adaptive timer engine** — per-phase/per-round durations (0.5s granularity), rounds, ratio
   mode, live pace multiplier, beginner max-hold safety cap with override + warning, optional
   progression auto-ramp. Deterministic, drift-free (anchors phases to the scheduled boundary so a
@@ -55,12 +58,14 @@ pnpm --filter @prana/desktop package   # Windows NSIS installer (release/)
 - **First-run medical disclaimer**, high-contrast theme, keyboard-operable UI.
 
 ## Known POC limitations
+
 - Presence uses a lightweight no-model heuristic (no MediaPipe model bundled).
 - Voice reports "unsupported" until an offline Vosk model is wired (button control always works).
 - Windows-first; macOS/Linux build configs are best-effort and untested.
 - Native binaries (`better-sqlite3`, Electron) must match the runtime; rebuild on platform change.
 
 ## Traceability
+
 Requirement IDs (`PFR-*`, `PNFR-*`, …) referenced throughout the source map to
 [docs/poc-1/SRS.md](docs/poc-1/SRS.md); build phases to
 [docs/poc-1/IMPLEMENTATION.md](docs/poc-1/IMPLEMENTATION.md).

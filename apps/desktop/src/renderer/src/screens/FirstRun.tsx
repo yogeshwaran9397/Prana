@@ -14,14 +14,14 @@ export function FirstRun(): JSX.Element {
           PranaCoach guides breathing (pranayama) practice with fully adaptive, beginner-safe timing.
         </p>
         <div className="mb-4 rounded-lg border border-amber-500/40 bg-amber-500/10 p-4 text-sm text-amber-200">
-          <strong>Medical disclaimer.</strong> Breath retention can cause dizziness. This app is not
-          medical advice. Never hold your breath to the point of discomfort. <strong>Stop immediately
-          if you feel dizzy or unwell and breathe normally.</strong> Consult a doctor before starting
-          if you are pregnant or have a heart, lung, or blood-pressure condition.
+          <strong>Medical disclaimer.</strong> Breath retention can cause dizziness. This app is not medical
+          advice. Never hold your breath to the point of discomfort.{" "}
+          <strong>Stop immediately if you feel dizzy or unwell and breathe normally.</strong> Consult a doctor
+          before starting if you are pregnant or have a heart, lung, or blood-pressure condition.
         </div>
         <label className="mb-4 flex items-center gap-2 text-slate-200">
-          <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
-          I understand and accept these terms.
+          <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />I understand
+          and accept these terms.
         </label>
         <button
           className="btn-primary disabled:opacity-40"

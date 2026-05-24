@@ -100,11 +100,7 @@ function startOfMonth(nowMs: number): number {
 }
 
 /** Count completed sessions inside the current week/month and report progress. PFR-31. */
-export function goalProgress(
-  goal: Goal,
-  history: SessionRecord[],
-  nowMs: number = Date.now(),
-): GoalProgress {
+export function goalProgress(goal: Goal, history: SessionRecord[], nowMs: number = Date.now()): GoalProgress {
   const from = goal.period === "weekly" ? startOfWeek(nowMs) : startOfMonth(nowMs);
   const completed = history.filter((s) => s.completed && s.startedAt >= from && s.startedAt <= nowMs).length;
   return {

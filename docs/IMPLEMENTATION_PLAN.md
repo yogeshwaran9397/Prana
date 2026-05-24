@@ -9,6 +9,7 @@
 - **Date:** 2026-05-24
 
 ### Release map
+
 - **R1 — Desktop, offline, no-auth:** Phases 0–5 below.
 - **R2 — Desktop + Android + iOS, offline, no-auth:** Phase 6 (Mobile).
 - **R3 — Cloud + Auth + 50k users:** Phases 7–9.
@@ -20,6 +21,7 @@
 ---
 
 ## Phase 0 — Project setup (Foundations) — R1
+
 1. Create a **monorepo**: `packages/core` (shared TS — domain, TimerEngine, repositories),
    `apps/desktop` (Electron), later `apps/mobile` (Capacitor). Scaffold desktop with
    Electron + React + TypeScript + Vite (e.g., `electron-vite`).
@@ -32,6 +34,7 @@
 **Exit criteria:** App launches on Windows, navigates between empty screens, DB file created.
 
 ## Phase 1 — Timer Engine + Guided Session (the core, no camera/voice yet)
+
 6. Implement domain types (`Phase`, `Technique`, `Routine`, `SafetyCaps`, `Progression`).
 7. Build the **Timer Engine** state machine (pure TS): timeline compilation + monotonic
    clock + events + `pause/resume/skip/stop`. **Write unit tests first** for caps, ratio
@@ -49,6 +52,7 @@
 visual + audio cues; pause/resume via buttons works; timer accurate.
 
 ## Phase 2 — Logging, Streaks, Goals, Badges, Notifications
+
 12. On `sessionEnd`, compute summary (duration, per-phase totals, longest hold) and **persist** the session.
 13. Implement **streak** + **weekly/monthly goal** logic (pure functions + tests).
 14. Implement **badge rules engine** + seed badges (First Session, 7-Day Streak, 30-Day
@@ -61,6 +65,7 @@ visual + audio cues; pause/resume via buttons works; timer accurate.
 notifications, and shows on the dashboard. All logic covered by tests.
 
 ## Phase 3 — Presence Monitoring (opt-in camera module)
+
 18. Add camera consent + Settings toggle + privacy copy ("no images stored").
 19. Implement **Presence Worker**: hidden `<video>`, BlazeFace/MediaPipe face detection,
     **randomized check intervals** (e.g., 30–90s), output present/absent + confidence.
@@ -71,6 +76,7 @@ notifications, and shows on the dashboard. All logic covered by tests.
 works; no raw frames persisted.
 
 ## Phase 4 — Voice Control (opt-in mic module)
+
 22. Add mic consent + Settings toggle + listening indicator.
 23. Integrate **Vosk WASM** in a Web Worker with a **restricted grammar** = `pause`, `resume`
     (+ `stop`, `next` optional).
@@ -81,6 +87,7 @@ works; no raw frames persisted.
 mic can be disabled; works offline.
 
 ## Phase 5 — Hardening & Release (R1 / Desktop MVP done)
+
 26. Accessibility pass (keyboard nav, captions, high-contrast theme).
 27. Progression engine end-to-end (auto-ramp holds across sessions).
 28. QA: timer drift over 15 min, presence accuracy across lighting, voice accuracy.
@@ -91,6 +98,7 @@ mic can be disabled; works offline.
 ---
 
 ## Phase 6 — Mobile (R2 / Desktop + Android + iOS, still offline, no-auth)
+
 30. Add `apps/mobile` using **Capacitor** (Ionic), consuming the **same `packages/core`** and
     the shared React UI; make the UI responsive/touch-first.
 31. Implement mobile **platform adapters** behind the existing interfaces: SQLite
@@ -106,6 +114,7 @@ mic can be disabled; works offline.
 ---
 
 ## Phase 7 — Cloud Backend + Auth (R3 foundation)
+
 35. Stand up backend (Node NestJS/Fastify or **FastAPI**) + **managed Postgres** mirroring the
     shared domain: `/auth`, `/routines`, `/sessions`, `/presence`, `/goals`, `/badges`,
     `/activity`, `/account`.
@@ -116,6 +125,7 @@ mic can be disabled; works offline.
 38. Build auth/account UI screens (sign-up, sign-in, verify, reset, profile, export, **delete account**).
 
 ## Phase 8 — Sync & Activity (R3)
+
 39. Implement `SyncingStorageRepository` = local SQLite cache + API client + **outbox/sync
     queue**, swapped in behind the unchanged `StorageRepository` interface (UI untouched).
 40. Conflict handling: additive logs merge; mutable records last-write-wins by `updated_at`;
@@ -125,6 +135,7 @@ mic can be disabled; works offline.
 42. Data export & account deletion server-side (GDPR/DPDP).
 
 ## Phase 9 — Scale, Security & GA (R3, 50k+ users)
+
 43. Make API tier **stateless + autoscaled** (≥2 instances) behind a load balancer; static
     assets/audio/ML models on **object storage + CDN**; add **Redis** for cache/rate-limit (designed-for).
 44. Observability: centralized logs, metrics, alerts; CI/CD with rollback; backups + tested restore.
@@ -137,16 +148,18 @@ export/delete work; load test sustains 50k-user target within SLOs; security rev
 ---
 
 ## Suggested build order rationale
+
 - **Engine + session loop first** — the customizable timer is the product's reason to exist.
 - **Logging/badges next** delivers the retention loop with zero hardware/permission risk.
 - **Camera and voice last among R1 modules** — highest-risk (permissions, ML, privacy) and
-  explicitly *opt-in*; the app must be fully usable without them.
+  explicitly _opt-in_; the app must be fully usable without them.
 - **Mobile (R2) before cloud** because the shared core makes mobile cheap, and a proven local
   product de-risks the backend work.
 - **Cloud last (R3)** so the offline product is validated first; the `StorageRepository` seam
   makes the switch additive, not a rewrite.
 
 ## Definition of Done
+
 - **R1:** beginner completes a guided, voice-controllable, presence-logged session fully
   offline; sessions persist; streaks/goals/badges + notifications work; data exportable;
   Windows installer available.

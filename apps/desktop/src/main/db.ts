@@ -104,13 +104,17 @@ export class SqliteStorageRepository implements StorageRepository {
   }
 
   async acceptDisclaimer(): Promise<void> {
-    this.db.prepare("UPDATE users SET disclaimer_accepted_at = ? WHERE id = ?").run(Date.now(), LOCAL_USER_ID);
+    this.db
+      .prepare("UPDATE users SET disclaimer_accepted_at = ? WHERE id = ?")
+      .run(Date.now(), LOCAL_USER_ID);
   }
 
   // ---- routines ----
   async listRoutines(): Promise<StoredRoutine[]> {
     const rows = this.db
-      .prepare("SELECT id, user_id, config_json, updated_at FROM routines WHERE user_id = ? ORDER BY updated_at DESC")
+      .prepare(
+        "SELECT id, user_id, config_json, updated_at FROM routines WHERE user_id = ? ORDER BY updated_at DESC",
+      )
       .all(LOCAL_USER_ID) as { id: string; user_id: string; config_json: string; updated_at: number }[];
     return rows.map((r) => ({
       ...(JSON.parse(r.config_json) as Routine),
@@ -138,7 +142,10 @@ export class SqliteStorageRepository implements StorageRepository {
   }
 
   // ---- sessions + presence ----
-  async saveSession(session: Omit<StoredSession, "userId">, presence: PresenceCheck[]): Promise<StoredSession> {
+  async saveSession(
+    session: Omit<StoredSession, "userId">,
+    presence: PresenceCheck[],
+  ): Promise<StoredSession> {
     const id = session.id || randomUUID();
     const tx = this.db.transaction(() => {
       this.db
@@ -204,7 +211,11 @@ export class SqliteStorageRepository implements StorageRepository {
     const rows = this.db
       .prepare("SELECT period, target, active FROM goals WHERE user_id = ?")
       .all(LOCAL_USER_ID) as { period: string; target: number; active: number }[];
-    return rows.map((r) => ({ period: r.period as Goal["period"], target: r.target, active: r.active === 1 }));
+    return rows.map((r) => ({
+      period: r.period as Goal["period"],
+      target: r.target,
+      active: r.active === 1,
+    }));
   }
 
   async setGoal(goal: Goal): Promise<void> {
@@ -225,9 +236,7 @@ export class SqliteStorageRepository implements StorageRepository {
   }
 
   async awardBadges(codes: string[]): Promise<void> {
-    const ins = this.db.prepare(
-      "INSERT OR IGNORE INTO user_badges(user_id, code, earned_at) VALUES (?,?,?)",
-    );
+    const ins = this.db.prepare("INSERT OR IGNORE INTO user_badges(user_id, code, earned_at) VALUES (?,?,?)");
     const now = Date.now();
     const tx = this.db.transaction(() => {
       for (const code of codes) ins.run(LOCAL_USER_ID, code, now);
@@ -297,8 +306,16 @@ export class SqliteStorageRepository implements StorageRepository {
              VALUES (?,?,?,?,?,?,?,?,?,?,?)`,
           )
           .run(
-            s.id, LOCAL_USER_ID, s.routineId, s.routineName, s.startedAt, s.endedAt,
-            s.durationS, s.longestHoldS, s.presencePct, s.completed ? 1 : 0,
+            s.id,
+            LOCAL_USER_ID,
+            s.routineId,
+            s.routineName,
+            s.startedAt,
+            s.endedAt,
+            s.durationS,
+            s.longestHoldS,
+            s.presencePct,
+            s.completed ? 1 : 0,
             JSON.stringify(s.perPhaseTotals),
           );
         const checks = bundle.presenceChecks[s.id] ?? [];

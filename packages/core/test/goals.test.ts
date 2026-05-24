@@ -77,7 +77,10 @@ describe("goalProgress (PFR-31)", () => {
   });
 
   it("computes total minutes from completed sessions", () => {
-    const h = [session("a", now, { durationS: 600 }), session("b", now, { durationS: 600, completed: false })];
+    const h = [
+      session("a", now, { durationS: 600 }),
+      session("b", now, { durationS: 600, completed: false }),
+    ];
     expect(totalMinutes(h)).toBe(10);
   });
 });
@@ -88,7 +91,9 @@ describe("evaluateBadges (PFR-32)", () => {
   });
 
   it("does not re-award an already-earned badge", () => {
-    expect(evaluateBadges([session("a", now)], new Set(["first_session"]), now)).not.toContain("first_session");
+    expect(evaluateBadges([session("a", now)], new Set(["first_session"]), now)).not.toContain(
+      "first_session",
+    );
   });
 
   it("awards Held 15s when a session holds ≥15s", () => {

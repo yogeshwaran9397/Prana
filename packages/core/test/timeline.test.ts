@@ -43,10 +43,7 @@ describe("compileTimeline", () => {
 
   it("expands rounds × phases in order (PFR-1, PFR-4)", () => {
     const tl = compileTimeline(routine(), { caps: caps() });
-    expect(tl.map((p) => p.kind)).toEqual([
-      "inhale", "hold_in", "exhale",
-      "inhale", "hold_in", "exhale",
-    ]);
+    expect(tl.map((p) => p.kind)).toEqual(["inhale", "hold_in", "exhale", "inhale", "hold_in", "exhale"]);
     expect(tl[3]!.round).toBe(2);
   });
 

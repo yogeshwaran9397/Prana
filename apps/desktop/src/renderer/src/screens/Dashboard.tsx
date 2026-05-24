@@ -1,5 +1,15 @@
 import { useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   computeStreak,
   dayKey,
@@ -26,7 +36,8 @@ export function Dashboard(): JSX.Element {
   // Sessions per day (last 14 days) + hold trend.
   const perDay = useMemo(() => {
     const map = new Map<string, number>();
-    for (const s of records) if (s.completed) map.set(dayKey(s.startedAt), (map.get(dayKey(s.startedAt)) ?? 0) + 1);
+    for (const s of records)
+      if (s.completed) map.set(dayKey(s.startedAt), (map.get(dayKey(s.startedAt)) ?? 0) + 1);
     const out: { day: string; sessions: number }[] = [];
     for (let i = 13; i >= 0; i--) {
       const d = new Date();

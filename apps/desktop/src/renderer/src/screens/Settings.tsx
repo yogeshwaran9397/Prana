@@ -82,7 +82,9 @@ export function Settings(): JSX.Element {
               type="number"
               className="input mt-1 w-full"
               value={draft.progression.deltaSeconds}
-              onChange={(e) => patch({ progression: { ...draft.progression, deltaSeconds: Number(e.target.value) } })}
+              onChange={(e) =>
+                patch({ progression: { ...draft.progression, deltaSeconds: Number(e.target.value) } })
+              }
             />
           </label>
           <label>
@@ -91,7 +93,9 @@ export function Settings(): JSX.Element {
               type="number"
               className="input mt-1 w-full"
               value={draft.progression.everyNSessions}
-              onChange={(e) => patch({ progression: { ...draft.progression, everyNSessions: Number(e.target.value) } })}
+              onChange={(e) =>
+                patch({ progression: { ...draft.progression, everyNSessions: Number(e.target.value) } })
+              }
             />
           </label>
           <label>
@@ -112,7 +116,11 @@ export function Settings(): JSX.Element {
         <h2 className="font-semibold">Audio, camera & voice</h2>
         <label className="flex items-center justify-between">
           <span>Audio cues</span>
-          <input type="checkbox" checked={draft.audioEnabled} onChange={(e) => patch({ audioEnabled: e.target.checked })} />
+          <input
+            type="checkbox"
+            checked={draft.audioEnabled}
+            onChange={(e) => patch({ audioEnabled: e.target.checked })}
+          />
         </label>
         <label className="flex items-center justify-between">
           <span>Volume</span>
@@ -127,7 +135,11 @@ export function Settings(): JSX.Element {
         </label>
         <label className="flex items-center justify-between">
           <span>Camera presence by default (no images stored)</span>
-          <input type="checkbox" checked={draft.cameraEnabled} onChange={(e) => patch({ cameraEnabled: e.target.checked })} />
+          <input
+            type="checkbox"
+            checked={draft.cameraEnabled}
+            onChange={(e) => patch({ cameraEnabled: e.target.checked })}
+          />
         </label>
         <div className="grid grid-cols-3 gap-3 text-sm">
           <label>
@@ -160,7 +172,11 @@ export function Settings(): JSX.Element {
         </div>
         <label className="flex items-center justify-between">
           <span>Microphone voice control by default</span>
-          <input type="checkbox" checked={draft.micEnabled} onChange={(e) => patch({ micEnabled: e.target.checked })} />
+          <input
+            type="checkbox"
+            checked={draft.micEnabled}
+            onChange={(e) => patch({ micEnabled: e.target.checked })}
+          />
         </label>
       </section>
 
@@ -168,7 +184,11 @@ export function Settings(): JSX.Element {
         <h2 className="font-semibold">Accessibility (PNFR-13)</h2>
         <label className="flex items-center justify-between">
           <span>High-contrast theme</span>
-          <input type="checkbox" checked={draft.highContrast} onChange={(e) => patch({ highContrast: e.target.checked })} />
+          <input
+            type="checkbox"
+            checked={draft.highContrast}
+            onChange={(e) => patch({ highContrast: e.target.checked })}
+          />
         </label>
       </section>
 
