@@ -10,6 +10,9 @@ import type { AppSettings, ExportBundle, Goal, PresenceCheck, Routine, StoredSes
 import { SqliteStorageRepository } from "./db.js";
 import { IPC } from "./ipc.js";
 
+// Clean product name → userData lands in %APPDATA%/PranaCoach (not the package name).
+app.setName("PranaCoach");
+
 let repo: SqliteStorageRepository;
 let mainWindow: BrowserWindow | null = null;
 

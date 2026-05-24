@@ -1,0 +1,22 @@
+appId: com.pranacoach.desktop
+productName: PranaCoach
+directories:
+  output: release
+  buildResources: build
+files:
+  - out/**/*
+  - package.json
+# better-sqlite3 ships a native .node binary; bundle it unpacked so it loads at runtime.
+asarUnpack:
+  - "**/*.node"
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: ${productName}-${version}-Setup.${ext}
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  perMachine: false
+# mac/linux left as best-effort defaults (R1 is Windows-first).
